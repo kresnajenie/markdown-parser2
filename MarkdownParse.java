@@ -16,27 +16,31 @@ public class MarkdownParse {
             int closeBracket = markdown.indexOf("]", openBracket);
             int openParen = markdown.indexOf("(", closeBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            if(openBracket==-1){
+                break;
+            }
+            if(closeBracket==-1){
+                break;
+            }
+            if(openParen==-1){
+                break;
+            }
+            if(closeParen==-1){
+                break;
+            }
+            if(openBracket!=0){
+                String a=markdown.substring(openBracket-1,openBracket);
+                if((closeBracket==openParen-1) && !(a.equals("!"))){
+                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                }
+            }
+            else{
+                if(closeBracket==openParen-1){
+                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                }
+            }
             currentIndex = closeParen + 1;
-            if (currentIndex == markdown.length()-1) {
-                break;
-            }
-            if (openBracket == -1) {
-                break;
-            }
-            if (closeBracket == -1) {
-                break;
-            }
-            if (openParen == -1) {
-                break;
-            }
-            if (closeParen == -1) {
-                break;
-            }
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
-
-            
         }
-
         return toReturn;
     }
 
@@ -45,19 +49,7 @@ public class MarkdownParse {
         Path fileName = Path.of(args[0]);
         String content = Files.readString(fileName);
         ArrayList<String> links = getLinks(content);
-        System.out.println(links);
-        // Path fileName1 = Path.of(args[1]);
-        // String content1 = Files.readString(fileName1);
-        // ArrayList<String> links1 = getLinks(content1);
-        // System.out.println(links1);
-        // Path fileName2 = Path.of(args[1]);
-        // String content2 = Files.readString(fileName2);
-        // ArrayList<String> links2 = getLinks(content2);
-        // System.out.println(links2);
-        // Path fileName3 = Path.of(args[1]);
-        // String content3 = Files.readString(fileName3);
-        // ArrayList<String> links3 = getLinks(content3);
-        // System.out.println(links3);
-        
+	    System.out.println(links);
+        System.out.print(fileName);
     }
 }
